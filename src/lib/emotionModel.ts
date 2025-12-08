@@ -31,7 +31,7 @@ export interface EmotionData {
 export interface Dyad {
   name: string
   primaryEmotions: [PrimaryEmotion, PrimaryEmotion]
-  type: 'primary'
+  type: 'primary' | 'secondary' | 'tertiary' | 'opposite'
   description: string
 }
 
@@ -303,6 +303,162 @@ export const PRIMARY_DYADS: Dyad[] = [
   },
 ]
 
+export const SECONDARY_DYADS: Dyad[] = [
+  {
+    name: 'Guilt',
+    primaryEmotions: ['Joy', 'Fear'],
+    type: 'secondary',
+    description:
+      'Feeling responsible for wrongdoing, where happiness is tainted by fear of consequences.',
+  },
+  {
+    name: 'Curiosity',
+    primaryEmotions: ['Trust', 'Surprise'],
+    type: 'secondary',
+    description:
+      'A desire to learn or know something, combining trust in exploration with the element of surprise.',
+  },
+  {
+    name: 'Despair',
+    primaryEmotions: ['Fear', 'Sadness'],
+    type: 'secondary',
+    description:
+      'Complete loss of hope, merging deep sadness with fear about the future.',
+  },
+  {
+    name: 'Unbelief',
+    primaryEmotions: ['Surprise', 'Disgust'],
+    type: 'secondary',
+    description:
+      'Rejection or inability to accept something as true, mixing surprise with disgust.',
+  },
+  {
+    name: 'Envy',
+    primaryEmotions: ['Sadness', 'Anger'],
+    type: 'secondary',
+    description:
+      'Resentful desire for what others have, combining sorrow over lack with anger at unfairness.',
+  },
+  {
+    name: 'Cynicism',
+    primaryEmotions: ['Disgust', 'Anticipation'],
+    type: 'secondary',
+    description:
+      'Distrustful attitude expecting the worst, where disgust meets pessimistic anticipation.',
+  },
+  {
+    name: 'Pride',
+    primaryEmotions: ['Anger', 'Joy'],
+    type: 'secondary',
+    description:
+      'Deep satisfaction derived from achievements, mixing joy with aggressive self-assertion.',
+  },
+  {
+    name: 'Fatalism',
+    primaryEmotions: ['Anticipation', 'Sadness'],
+    type: 'secondary',
+    description:
+      'Belief that all events are predetermined and inevitable, combining anticipation with resignation.',
+  },
+]
+
+export const TERTIARY_DYADS: Dyad[] = [
+  {
+    name: 'Delight',
+    primaryEmotions: ['Joy', 'Surprise'],
+    type: 'tertiary',
+    description:
+      'Great pleasure and satisfaction from something unexpected and wonderful.',
+  },
+  {
+    name: 'Sentimentality',
+    primaryEmotions: ['Trust', 'Sadness'],
+    type: 'tertiary',
+    description:
+      'Tender feelings about the past, mixing trust and acceptance with gentle sadness.',
+  },
+  {
+    name: 'Shame',
+    primaryEmotions: ['Fear', 'Disgust'],
+    type: 'tertiary',
+    description:
+      'Painful feeling of humiliation from awareness of wrong or foolish behavior.',
+  },
+  {
+    name: 'Outrage',
+    primaryEmotions: ['Surprise', 'Anger'],
+    type: 'tertiary',
+    description:
+      'Intense anger aroused by something perceived as unjust or offensive.',
+  },
+  {
+    name: 'Pessimism',
+    primaryEmotions: ['Sadness', 'Anticipation'],
+    type: 'tertiary',
+    description:
+      'Tendency to expect the worst, combining current sadness with negative future expectations.',
+  },
+  {
+    name: 'Morbidness',
+    primaryEmotions: ['Disgust', 'Joy'],
+    type: 'tertiary',
+    description:
+      'Unhealthy interest in disturbing subjects, mixing disgust with perverse pleasure.',
+  },
+  {
+    name: 'Dominance',
+    primaryEmotions: ['Anger', 'Trust'],
+    type: 'tertiary',
+    description:
+      'Power and influence over others, combining anger-driven assertion with trust in authority.',
+  },
+  {
+    name: 'Anxiety',
+    primaryEmotions: ['Anticipation', 'Fear'],
+    type: 'tertiary',
+    description:
+      'Worried anticipation of future threats, where forward-thinking meets apprehension.',
+  },
+]
+
+export const OPPOSITE_DYADS: Dyad[] = [
+  {
+    name: 'Conflict (Joy-Sadness)',
+    primaryEmotions: ['Joy', 'Sadness'],
+    type: 'opposite',
+    description:
+      'Opposing emotions creating internal conflict between happiness and sorrow.',
+  },
+  {
+    name: 'Ambivalence (Trust-Disgust)',
+    primaryEmotions: ['Trust', 'Disgust'],
+    type: 'opposite',
+    description:
+      'Contradictory feelings of acceptance and revulsion toward the same thing.',
+  },
+  {
+    name: 'Frozen (Fear-Anger)',
+    primaryEmotions: ['Fear', 'Anger'],
+    type: 'opposite',
+    description:
+      'Paralysis from opposing impulses to flee or fight, creating emotional gridlock.',
+  },
+  {
+    name: 'Bewilderment (Surprise-Anticipation)',
+    primaryEmotions: ['Surprise', 'Anticipation'],
+    type: 'opposite',
+    description:
+      'Confusion from unexpected events clashing with expectations.',
+  },
+]
+
+export const ALL_DYADS: Dyad[] = [
+  ...PRIMARY_DYADS,
+  ...SECONDARY_DYADS,
+  ...TERTIARY_DYADS,
+  ...OPPOSITE_DYADS,
+]
+
 export const EMOTION_ORDER: PrimaryEmotion[] = [
   'Joy',
   'Trust',
@@ -330,6 +486,13 @@ function areAdjacent(a: PrimaryEmotion, b: PrimaryEmotion): boolean {
   return diff === 1 || diff === 7
 }
 
+function getEmotionDistance(a: PrimaryEmotion, b: PrimaryEmotion): number {
+  const aPos = EMOTIONS[a].position
+  const bPos = EMOTIONS[b].position
+  const diff = Math.abs(aPos - bPos)
+  return Math.min(diff, 8 - diff)
+}
+
 export function getDyad(
   emotionA: PrimaryEmotion,
   emotionB: PrimaryEmotion
@@ -338,19 +501,19 @@ export function getDyad(
     return null
   }
 
-  if (!areAdjacent(emotionA, emotionB)) {
-    return null
-  }
-
   const [first, second] = normalizeEmotionPair(emotionA, emotionB)
 
-  const dyad = PRIMARY_DYADS.find(
+  const dyad = ALL_DYADS.find(
     (d) =>
       (d.primaryEmotions[0] === first && d.primaryEmotions[1] === second) ||
       (d.primaryEmotions[0] === second && d.primaryEmotions[1] === first)
   )
 
   return dyad || null
+}
+
+export function getDyadsByType(type: Dyad['type']): Dyad[] {
+  return ALL_DYADS.filter(d => d.type === type)
 }
 
 export function getEmotionColor(

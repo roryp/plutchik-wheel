@@ -27,13 +27,20 @@ This is a single-page interactive visualization tool with state management for e
 - **Success criteria**: Selection is visually clear, information is accurate and well-formatted, previous selection is cleared
 
 ### 3. Dyad Discovery (Two-Emotion Combinations)
-- **Functionality**: Select two adjacent primary emotions to reveal the "classic dyad" emotion they create together
-- **Purpose**: Teaches users how basic emotions combine to form more complex emotional states
-- **Trigger**: User clicks a second emotion while one is already selected
+- **Functionality**: Select two primary emotions to reveal the dyad emotion they create together (primary, secondary, tertiary, or opposite dyads based on emotional distance)
+- **Purpose**: Teaches users how basic emotions combine to form more complex emotional states across all dyad types
+- **Trigger**: User clicks a second emotion while one is already selected, or selects from the Dyad Browser
 - **Progression**: First emotion selected → second emotion clicked → dyad calculation → both petals highlight → connecting visual appears → center panel shows dyad name and description
-- **Success criteria**: Only adjacent emotions create valid dyads, both emotions remain highlighted, dyad information is clear and accurate
+- **Success criteria**: All dyad types (primary, secondary, tertiary, opposite) are calculated and displayed correctly, both emotions remain highlighted, dyad information is clear and accurate
 
-### 4. Keyboard Navigation & Accessibility
+### 4. Dyad Browser
+- **Functionality**: Tabbed interface showing all dyads organized by type (Primary, Secondary, Tertiary, Opposite) with descriptions and the ability to select any dyad to highlight its component emotions
+- **Purpose**: Provides comprehensive exploration of all emotional combinations, allowing users to browse and discover dyads systematically
+- **Trigger**: User switches to the "Dyad Browser" tab in the right panel
+- **Progression**: Browse tab → select dyad type (Primary/Secondary/Tertiary/Opposite) → click dyad → emotions highlight on wheel → center panel shows dyad details
+- **Success criteria**: All 28 dyads are listed correctly, selecting a dyad highlights the two emotions on the wheel at normal intensity, dyad types are clearly distinguished
+
+### 5. Keyboard Navigation & Accessibility
 - **Functionality**: Full keyboard control using Tab, Arrow keys, Enter/Space for selection, with comprehensive ARIA labels
 - **Purpose**: Ensures all users can access and use the application regardless of input method or assistive technology
 - **Trigger**: User presses Tab or Arrow keys to navigate
@@ -49,12 +56,14 @@ This is a single-page interactive visualization tool with state management for e
 
 ## Edge Case Handling
 
-- **Non-adjacent dyad selection**: Show a message indicating these emotions don't form a classic dyad, or simply show both emotions separately
-- **Same emotion clicked twice**: Treat as deselection or no-op, clearing the selection
+- **Non-adjacent dyad selection**: All emotion combinations now form valid dyads (primary for adjacent, secondary for 2-step, tertiary for 3-step, opposite for 4-step apart)
+- **Same emotion clicked twice**: Treat as deselection, clearing the selection
 - **Third emotion click**: Clear previous selections and start new selection with the third emotion as first
-- **Mobile viewport**: Ensure wheel scales appropriately, tooltips don't overflow screen, touch targets are large enough (44×44px minimum)
+- **Dyad browser selection**: Automatically highlights both component emotions on the wheel at normal intensity
+- **Mobile viewport**: Ensure wheel scales appropriately, tooltips don't overflow screen, touch targets are large enough (44×44px minimum), tabs are accessible
 - **Rapid clicking**: Debounce or handle state transitions smoothly to avoid visual glitches
 - **Keyboard focus on load**: Ensure first interactive element can receive focus immediately
+- **Tab switching**: Preserve selection state when switching between Selection and Dyad Browser tabs
 
 ## Design Direction
 
@@ -112,17 +121,19 @@ Animations should reinforce the exploratory nature of the app—smooth, purposef
 
 **Components from Shadcn**:
 - **Card**: For side panel and center information display - use with subtle shadow and rounded corners
-- **Button**: For "Clear Selection" action - primary variant with rounded style
+- **Button**: For "Clear Selection" action and dyad list items - primary variant with rounded style
 - **Tooltip**: For hover information on wheel segments - use with short delay (200ms)
-- **Badge**: For intensity level indicators - custom colors matching emotion theme
+- **Badge**: For intensity level indicators and dyad counts - custom colors matching emotion theme
 - **Separator**: To divide sections in info panels - subtle and thin
-- **ScrollArea**: For description text if it becomes lengthy - smooth scrolling
+- **ScrollArea**: For description text and dyad lists - smooth scrolling
+- **Tabs**: For switching between Selection view and Dyad Browser - clean, segmented control style
 
 **Customizations**:
 - **PlutchikWheel** (custom SVG component): Renders the full emotion wheel with petals, handles all interaction logic
 - **EmotionPetal** (custom SVG component): Individual petal with three intensity bands, isolated for better state management
 - **ConnectionArc** (custom SVG component): Curved line connecting two petals when dyad is active
 - **CenterHub** (custom component): Central circular area displaying current selection or dyad information
+- **DyadBrowser** (custom component): Tabbed interface for browsing all dyads by type with selection capability
 
 **States**:
 - **Wheel segments**: Default (subtle border), Hover (brightened fill + scale), Selected (accent border + glow), Focused (dashed outline for keyboard nav)
@@ -132,7 +143,7 @@ Animations should reinforce the exploratory nature of the app—smooth, purposef
 **Icon Selection**:
 - **X (from @phosphor-icons/react)**: For clear selection button
 - **Info (from @phosphor-icons/react)**: For help/information tooltips
-- **ArrowsClockwise (from @phosphor-icons/react)**: Alternative for reset/clear action
+- **ArrowRight (from @phosphor-icons/react)**: For showing emotion combinations in dyad browser
 - **Heart (from @phosphor-icons/react)**: Could be used as app icon or for "Love" dyad
 - **Lightning (from @phosphor-icons/react)**: For intensity indicators
 
@@ -146,7 +157,8 @@ Animations should reinforce the exploratory nature of the app—smooth, purposef
 **Mobile Adaptations**:
 - **Layout**: Stack wheel above info panels on mobile (<768px), side-by-side on desktop
 - **Wheel size**: 90vw max on mobile, fixed optimal size (600px) on desktop
-- **Panels**: Full width on mobile with `max-h` and scroll, fixed sidebar on desktop
-- **Touch targets**: Ensure all wheel segments are at least 44×44px at smallest screen size
+- **Panels**: Full width on mobile with `max-h` and scroll, fixed sidebar on desktop with tabbed interface
+- **Touch targets**: Ensure all wheel segments and dyad list items are at least 44×44px at smallest screen size
 - **Tooltips**: Convert to tap-to-show on mobile instead of hover
 - **Typography**: Reduce H1 to 24px, H2 to 22px on mobile for better fit
+- **Tabs**: Stack vertically or use scrollable tab list on very narrow screens

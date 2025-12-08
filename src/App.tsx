@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { PlutchikWheel } from '@/components/PlutchikWheel'
 import { CenterHub } from '@/components/CenterHub'
 import { SelectionPanel } from '@/components/SelectionPanel'
+import { DyadBrowser } from '@/components/DyadBrowser'
 import { Button } from '@/components/ui/button'
 import { X, Info } from '@phosphor-icons/react'
 import {
@@ -16,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 interface EmotionSelection {
   emotion: PrimaryEmotion
@@ -74,6 +76,15 @@ function App() {
     setCurrentDyad(null)
   }
 
+  const handleDyadSelect = (emotions: [PrimaryEmotion, PrimaryEmotion]) => {
+    const newSelections: EmotionSelection[] = [
+      { emotion: emotions[0], intensity: 'normal' },
+      { emotion: emotions[1], intensity: 'normal' },
+    ]
+    setSelectedEmotions(newSelections)
+    updateDyad(newSelections)
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -100,7 +111,8 @@ function App() {
                 <TooltipContent className="max-w-xs">
                   <p className="text-xs">
                     Click emotion segments to explore intensities. Select two
-                    adjacent emotions to discover their dyad combination.
+                    emotions to discover their dyad combination, or browse all
+                    dyads in the Dyad Browser tab.
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -143,11 +155,25 @@ function App() {
             )}
           </div>
 
-          <div className="lg:sticky lg:top-6 h-[600px]">
-            <SelectionPanel
-              selectedEmotions={selectedEmotions}
-              dyad={currentDyad}
-            />
+          <div className="lg:sticky lg:top-6">
+            <Tabs defaultValue="selection" className="h-[700px] flex flex-col">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="selection">Selection</TabsTrigger>
+                <TabsTrigger value="browser">Dyad Browser</TabsTrigger>
+              </TabsList>
+              <TabsContent value="selection" className="flex-1 mt-4">
+                <SelectionPanel
+                  selectedEmotions={selectedEmotions}
+                  dyad={currentDyad}
+                />
+              </TabsContent>
+              <TabsContent value="browser" className="flex-1 mt-4 overflow-hidden">
+                <DyadBrowser
+                  onDyadSelect={handleDyadSelect}
+                  selectedDyad={currentDyad}
+                />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
 
