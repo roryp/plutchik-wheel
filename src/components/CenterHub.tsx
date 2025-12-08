@@ -15,7 +15,7 @@ export const CenterHub = ({ selectedEmotion, dyad }: CenterHubProps) => {
     return (
       <Card className="p-6 text-center space-y-3 bg-card border-2 border-accent/30 shadow-lg">
         <Badge variant="secondary" className="text-xs uppercase tracking-wide">
-          Primary Dyad
+          {dyad.type} Dyad
         </Badge>
         <h2 className="emotion-heading text-3xl font-semibold text-foreground">
           {dyad.name}

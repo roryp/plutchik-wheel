@@ -31,8 +31,8 @@ export const SelectionPanel = ({
               <h3 className="text-lg font-semibold text-foreground mb-2">
                 Dyad Information
               </h3>
-              <Badge variant="secondary" className="mb-3">
-                Primary Dyad
+              <Badge variant="secondary" className="mb-3 capitalize">
+                {dyad.type} Dyad
               </Badge>
             </div>
 
