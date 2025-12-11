@@ -360,6 +360,13 @@ export const SECONDARY_DYADS: Dyad[] = [
     description:
       'Belief that all events are predetermined and inevitable, combining anticipation with resignation.',
   },
+  {
+    name: 'Hope',
+    primaryEmotions: ['Anticipation', 'Trust'],
+    type: 'secondary',
+    description:
+      'Confident expectation of positive outcomes, combining forward-looking anticipation with trust in favorable results.',
+  },
 ]
 
 export const TERTIARY_DYADS: Dyad[] = [
