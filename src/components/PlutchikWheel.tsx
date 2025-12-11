@@ -114,20 +114,12 @@ const EmotionPetal = ({
             key={`${emotion}-${band.intensity}`}
             d={band.path}
             fill={color}
-            stroke={
-              isSelected
-                ? 'var(--accent)'
-                : isThisBandSelected
-                ? 'var(--accent)'
-                : 'var(--border)'
-            }
-            strokeWidth={isThisBandSelected ? 3 : isSelected ? 2 : 1}
+            stroke={isThisBandSelected ? 'var(--accent)' : 'var(--border)'}
+            strokeWidth={isThisBandSelected ? 3 : 1}
             className="cursor-pointer transition-all duration-200 hover:brightness-110 hover:scale-[1.02] origin-center"
             style={{
-              filter: isSelected ? 'drop-shadow(0 0 8px var(--accent))' : '',
-              opacity: isThisBandSelected ? 1 : isSelected ? 0.9 : 0.85,
-              outline: isFocused ? '2px dashed var(--accent)' : 'none',
-              outlineOffset: '2px',
+              filter: isThisBandSelected ? 'drop-shadow(0 0 8px var(--accent))' : '',
+              opacity: isThisBandSelected ? 1 : 0.85,
             }}
             onClick={() => onSelect(emotion, band.intensity)}
             onMouseEnter={() => onHover(emotion, band.intensity)}
