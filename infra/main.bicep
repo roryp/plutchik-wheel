@@ -138,7 +138,7 @@ module containerApp 'br/public:avm/res/app/container-app:0.14.0' = {
     ingressTargetPort: 80
     ingressExternal: true
     scaleSettings: {
-      minReplicas: 0
+      minReplicas: 1
       maxReplicas: 3
     }
   }
