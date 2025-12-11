@@ -29,11 +29,13 @@ When you select one emotion, you can:
 - Discover the opposite emotion on the wheel
 
 ### Dyad Discovery
-Select two **adjacent** emotions to discover their combination:
-- **8 primary dyads** are supported (e.g., Joy + Trust = Love)
+Select any two emotions to discover their combination:
+- **Primary dyads**: Adjacent emotions (e.g., Joy + Trust = Love)
+- **Secondary dyads**: Emotions one apart (e.g., Anticipation + Trust = Hope)
+- **Tertiary dyads**: Emotions two apart (e.g., Joy + Surprise = Delight)
+- **Opposite dyads**: Conflicting emotions (e.g., Joy + Sadness = Conflict)
 - Visual connection shows the relationship between the two emotions
 - Detailed explanation of the combined emotion
-- View both component emotions and how they interact
 
 ### Accessibility
 - **Full keyboard navigation**: Use Tab and Arrow keys to navigate, Enter/Space to select
@@ -58,9 +60,11 @@ Select two **adjacent** emotions to discover their combination:
 - Fear ↔ Anger
 - Surprise ↔ Anticipation
 
-## Primary Dyads
+## Emotion Dyads
 
-When adjacent emotions combine, they create these dyads:
+When emotions combine, they create complex "dyad" emotions. The type of dyad depends on the distance between emotions on the wheel:
+
+### Primary Dyads (Adjacent emotions)
 
 | Dyad | Component Emotions |
 |------|-------------------|
@@ -72,6 +76,42 @@ When adjacent emotions combine, they create these dyads:
 | **Remorse** | Sadness + Disgust |
 | **Contempt** | Disgust + Anger |
 | **Aggressiveness** | Anger + Anticipation |
+
+### Secondary Dyads (One emotion apart)
+
+| Dyad | Component Emotions |
+|------|-------------------|
+| **Hope** | Anticipation + Trust |
+| **Guilt** | Joy + Fear |
+| **Curiosity** | Trust + Surprise |
+| **Despair** | Fear + Sadness |
+| **Unbelief** | Surprise + Disgust |
+| **Envy** | Sadness + Anger |
+| **Cynicism** | Disgust + Anticipation |
+| **Pride** | Anger + Joy |
+| **Fatalism** | Anticipation + Sadness |
+
+### Tertiary Dyads (Two emotions apart)
+
+| Dyad | Component Emotions |
+|------|-------------------|
+| **Delight** | Joy + Surprise |
+| **Sentimentality** | Trust + Sadness |
+| **Shame** | Fear + Disgust |
+| **Outrage** | Surprise + Anger |
+| **Pessimism** | Sadness + Anticipation |
+| **Morbidness** | Disgust + Joy |
+| **Dominance** | Anger + Trust |
+| **Anxiety** | Anticipation + Fear |
+
+### Opposite Dyads (Conflicting emotions)
+
+| Dyad | Component Emotions |
+|------|-------------------|
+| **Conflict** | Joy + Sadness |
+| **Ambivalence** | Trust + Disgust |
+| **Frozen** | Fear + Anger |
+| **Bewilderment** | Surprise + Anticipation |
 
 ## How to Run
 
@@ -127,7 +167,7 @@ interface EmotionData {
 interface Dyad {
   name: string
   primaryEmotions: [PrimaryEmotion, PrimaryEmotion]
-  type: 'primary'
+  type: 'primary' | 'secondary' | 'tertiary' | 'opposite'
   description: string
 }
 ```
@@ -206,11 +246,11 @@ MIT License - see LICENSE file for details
 ## Contributing
 
 Contributions are welcome! Areas for enhancement:
-- Additional dyad types (secondary, tertiary)
 - Localization/internationalization
 - Animation improvements
 - Additional educational content
 - Mobile touch gesture improvements
+- Emotion journaling features
 
 ---
 
