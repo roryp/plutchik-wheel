@@ -1,5 +1,23 @@
 # Plutchik Wheel Explorer
 
+<p align="center">
+  <img src="docs/screenshot.png" alt="Plutchik Wheel Explorer - Interactive Emotion Visualization" width="800">
+</p>
+
+<p align="center">
+  <strong>An interactive visualization of Plutchik's Wheel of Emotions</strong><br>
+  Explore primary emotions, their intensities, and how they combine into complex feelings.
+</p>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#the-8-primary-emotions">The 8 Emotions</a> •
+  <a href="#development">Development</a>
+</p>
+
+---
+
 An interactive web application for exploring **Robert Plutchik's Wheel of Emotions**, a psychoevolutionary theory of emotion developed in 1980. This tool helps users understand primary emotions, their varying intensities, and how emotions combine to form complex emotional states.
 
 ## What is Plutchik's Wheel?
