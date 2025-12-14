@@ -486,14 +486,14 @@ function normalizeEmotionPair(
   return aIndex <= bIndex ? [a, b] : [b, a]
 }
 
-function areAdjacent(a: PrimaryEmotion, b: PrimaryEmotion): boolean {
+function _areAdjacent(a: PrimaryEmotion, b: PrimaryEmotion): boolean {
   const aPos = EMOTIONS[a].position
   const bPos = EMOTIONS[b].position
   const diff = Math.abs(aPos - bPos)
   return diff === 1 || diff === 7
 }
 
-function getEmotionDistance(a: PrimaryEmotion, b: PrimaryEmotion): number {
+function _getEmotionDistance(a: PrimaryEmotion, b: PrimaryEmotion): number {
   const aPos = EMOTIONS[a].position
   const bPos = EMOTIONS[b].position
   const diff = Math.abs(aPos - bPos)

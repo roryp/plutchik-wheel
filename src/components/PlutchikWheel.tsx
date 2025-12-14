@@ -38,7 +38,7 @@ const EmotionPetal = ({
   selectedIntensity,
   onSelect,
   onHover,
-  isFocused,
+  _isFocused,
   onFocus,
 }: PetalProps) => {
   const centerX = 300

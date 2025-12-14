@@ -2,7 +2,6 @@ import { useState } from 'react'
 import {
   Dyad,
   PrimaryEmotion,
-  getDyadsByType,
   PRIMARY_DYADS,
   SECONDARY_DYADS,
   TERTIARY_DYADS,
@@ -21,19 +20,6 @@ interface DyadBrowserProps {
 
 export function DyadBrowser({ onDyadSelect, selectedDyad }: DyadBrowserProps) {
   const [activeTab, setActiveTab] = useState<Dyad['type']>('primary')
-
-  const getDyadTypeLabel = (type: Dyad['type']): string => {
-    switch (type) {
-      case 'primary':
-        return 'Primary Dyads'
-      case 'secondary':
-        return 'Secondary Dyads'
-      case 'tertiary':
-        return 'Tertiary Dyads'
-      case 'opposite':
-        return 'Opposite Dyads'
-    }
-  }
 
   const getDyadTypeDescription = (type: Dyad['type']): string => {
     switch (type) {
