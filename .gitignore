@@ -31,4 +31,12 @@ packages
 pids
 .file-manifest
 
+# GitHub Spark artifacts
 .spark-workbench-id
+.spark-initial-sha
+spark.meta.json
+runtime.config.json
+theme.json
+
+# Playwright
+.playwright-mcp/
