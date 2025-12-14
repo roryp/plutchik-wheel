@@ -95,6 +95,7 @@
         ]
     },
     "optionalDependencies": {
-        "@rollup/rollup-win32-x64-msvc": "^4.53.3"
+        "@rollup/rollup-win32-x64-msvc": "^4.53.3",
+        "@tailwindcss/oxide-win32-x64-msvc": "^4.1.18"
     }
 }
