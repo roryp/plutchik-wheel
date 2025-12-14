@@ -1,0 +1,59 @@
+{
+  "name": "Plutchik Wheel Explorer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/azure-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-azuretools.vscode-azurecontainerapps"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "github.copilot.chat.agent.runTasks": true,
+        "github.copilot.chat.agent.autoFix": true
+      }
+    }
+  },
+  "forwardPorts": [5173, 4173, 80],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openBrowser"
+    },
+    "4173": {
+      "label": "Vite Preview",
+      "onAutoForward": "notify"
+    },
+    "80": {
+      "label": "Nginx Production",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "npm install",
+  "postStartCommand": "echo '🎨 Plutchik Wheel Explorer ready! Run: npm run dev'",
+  "remoteUser": "node",
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+  "runArgs": ["--init"],
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb"
+  }
+}
